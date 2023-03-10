@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="@color/blueneon"
+    >
+
+    <TextView
+        android:text="@string/title"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:background="@color/bluedark"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <ImageView
+        android:src="@drawable/turismocolombia"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/name"
+                android:textColor="@color/black"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:drawableStart="@drawable/baseline_person_24"
+                android:id="@+id/etname"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:inputType="textPersonName"
+                android:hint="Ingrese su nombre"
+                android:textAlignment="center"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/email"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:drawableStart="@drawable/baseline_email_24"
+            android:id="@+id/etemail"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:inputType="textEmailAddress"
+            android:hint="Ingrese su correo"
+            android:textAlignment="center"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/phone"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:drawableStart="@drawable/baseline_smartphone_24"
+            android:id="@+id/etphone"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:inputType="phone|number"
+            android:hint="Ingrese su telefono"
+            android:textAlignment="center"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Destino"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"/>
+
+            <Spinner
+                android:id="@+id/sptarget"
+                android:layout_width="238dp"
+                android:layout_height="wrap_content"
+                />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Nro personas"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/edpersonalnumber"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:inputType="phone|number"
+            android:hint="Numeros de personas"
+            android:textAlignment="center"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <TextView
+        android:text="Total del plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/bluedark"
+        android:textStyle="bold"
+        />
+
+    <TextureView
+        android:id="@+id/tvtotalplan"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+
+        <Button
+            android:text="Calcular"
+            android:id="@+id/btncalculate"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:backgroundTint="#AF0D0D"
+            />
+
+    <Button
+        android:text="Limpiar"
+        android:id="@+id/btnclear"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:backgroundTint="#056EC1"
+        />
+
+
+</LinearLayout>

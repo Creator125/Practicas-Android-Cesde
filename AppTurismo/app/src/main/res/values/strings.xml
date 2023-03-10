@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Super Turismo</string>
+    <string name="title">Agencia de turismo</string>
+    <string name="name">Nombre</string>
+    <string name="email">Correo Electronico</string>
+    <string name="phone">Telefono</string>
+</resources>
