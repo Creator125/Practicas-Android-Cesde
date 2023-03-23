@@ -12,6 +12,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
     //Generar un array para llenar los destinos
     String[] targets ={"Guatape", "Manizales","Medellin"};
@@ -47,7 +49,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //Generar el evento para cuando se seleccione un destino
         target.setOnItemSelectedListener(this);
 
-        //Generar el evento del boton calculate
+        //Evento del boton limpiar (clean)
+        clean.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Limpiar los elemetos referenciados de name, email, phone, personsNumber
+                name.setText("");
+                email.setText("");
+                phone.setText("");
+                personsnumber.setText("");
+                totalplan.setText("");
+                name.requestFocus(); //Enviar el foco al elemento referenciado name
+            }
+        });
+
+        //Evento del boton calcular (calculate)
         calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,12 +95,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     if(Integer.valueOf(mpersonsnumber) >= 5){
                         discout = (targteValue * Integer.valueOf(mpersonsnumber)) * 0.1;
                     }
+                    //Hallar el valor total del plan incluyendo el descuento
+                    double valorPlan = (targteValue * Integer.valueOf(mpersonsnumber)) - discout;
+                    //Dar formato al numero que se vaya a mostrar
+                    DecimalFormat numdecilformat = new DecimalFormat("###,###,###,###.##");
+                    //Mostrar el valor total del plan
+                    totalplan.setText(numdecilformat.format(valorPlan));
 
                 }else{
                     Toast.makeText(getApplicationContext(), "Debe ingresar todos los datos", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
     }
 
     @Override
