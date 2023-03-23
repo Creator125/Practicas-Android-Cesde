@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FinanciCom</string>
+    <string name="Title">Ingrese los siguientes datos</string>
+    <string name="textVarPrestamo">Valor de prestamo</string>
+    <string name="textFecha">Fecha</string>
+    <string name="textCuotas">Numero de cuotas</string>
+    <string name="textTipoPrestamo">Tipo de prestamo</string>
+    <string name="calcular">Calcular</string>
+    <string name="limpiar">Limpiar</string>
+</resources>
