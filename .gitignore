@@ -31,3 +31,7 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+#Archivos comprimidos para subir mi sactividades (incesarios para git)
+*.rar
+*zip
