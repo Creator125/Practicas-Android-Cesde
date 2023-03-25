@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 //Eliminar los elementos asociados VarlorPrestamos y Fecha
                 valorPrestamo.setText("");
                 fecha.setText("");
+                valorDeuda.setText("");
+                valorCuota.setText("");
                 valorPrestamo.requestFocus(); //Enviar el foco al elemento referenciado 'valorPrestamo'
             }
         });
