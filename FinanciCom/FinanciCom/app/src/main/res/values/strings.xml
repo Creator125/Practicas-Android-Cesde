@@ -6,7 +6,7 @@
     <string name="textNumCuotas">Numero de cuotas</string>
     <string name="textTipoPrestamo">Tipo de prestamo</string>
     <string name="calcular">Calcular</string>
-    <string name="limpiar">Limpiar</string>
+    <string name="limpiar">Borrar</string>
     <string name="textValorDeuda">Valor Deuda</string>
     <string name="textValorCuota">Valor Cuota</string>
 </resources>
