@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                     switch (selecPrestamos){
                         case "Vivienda":
-                            interes = 0.1;
+                            interes = (0.1 / selecCuotas) * Double.valueOf(mvalorPrestamo);
                             break;
                         case "Vehiculo":
-                            interes = 1.5;
+                            interes = (1.5 / selecCuotas) * Double.valueOf(mvalorPrestamo);
                     }
 
                     //Hallar el valor deuda
