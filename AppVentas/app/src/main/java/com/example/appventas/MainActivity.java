@@ -16,8 +16,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnGuardar, btnBuscar, btnActualizar, btnEliminar;
     TextView tvMensaje;
 
-    //Instaciar la base de datos de bdVentas
-    clsVentas dbVentas = new clsVentas(this, "dbVentas", null, 1)
+    //Instaciar la base de datos de clsVentas
+    clsVentas dbVentas = new clsVentas(this, "dbVentas", null, 1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +32,14 @@ public class MainActivity extends AppCompatActivity {
         btnBuscar = findViewById(R.id.btnbuscar);
         btnActualizar = findViewById(R.id.btnactualizar);
         btnEliminar = findViewById(R.id.btneliminar);
+        tvMensaje = findViewById(R.id.tvmensaje);
 
         //Eventos
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!etIdent.getText().toString().isEmpty() && !etFullnombre.getText().toString().isEmpty() &&
-                    !etEmail.getText().toString().isEmpty() && !etContrasena.getText().toString().isEmpty()){
-                    guardaVenta(etIdent.getText().toString(), etFullnombre.getText().toString(),
-                                etEmail.getText().toString(), etFullnombre.getText().toString());
+                if(!etIdent.getText().toString().isEmpty() && !etFullnombre.getText().toString().isEmpty() && !etEmail.getText().toString().isEmpty() && !etContrasena.getText().toString().isEmpty()){
+                    guardaVendedor(etIdent.getText().toString(), etFullnombre.getText().toString(), etEmail.getText().toString(), etContrasena.getText().toString());
                 }else{
                     tvMensaje.setTextColor(Color.RED);
                     tvMensaje.setText("Todos los datos Son obligatorios");
@@ -49,15 +48,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void guardaVenta(String sIdent, String seFullnombre, String sEmail, String sContrasena) {
+    private void guardaVendedor(String sIdent, String sFullnombre, String sEmail, String sContrasena) {
         //Instanciar objeto de la clase SQLinteDatabase
         SQLiteDatabase dbw = dbVentas.getWritableDatabase();
-        ContentValues cVentas = new ContentValues(); //Tabla temporal
+        ContentValues cVendedor = new ContentValues(); //Tabla temporal
 
-        cVentas.put("ident", sIdent);
-        cVentas.put("nombre", seFullnombre);
-        cVentas.put("email", sEmail);
-        cVentas.put("contraseña", sContrasena);
-        dbw.insert("Vendedor")
+        cVendedor.put("ident", sIdent);
+        cVendedor.put("nombre", sFullnombre);
+        cVendedor.put("email", sEmail);
+        cVendedor.put("contraseña", sContrasena);
+        dbw.insert("Vendedor", null, cVendedor);
+        dbw.close();
+        tvMensaje.setTextColor(Color.GREEN);
+        tvMensaje.setText("Vendedor agregado correctamente");
     }
 }

@@ -7,4 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="backgroundDefine">#FFFBF2</color>
+    <color name="colorTiltle">#001E75</color>
+    <color name="green_btnGuardar">#1E6E1E</color>
+    <color name="gray_btnBuscar">#575757</color>
+    <color name="blue_btnActualizar">#0D55CC</color>
+    <color name="red_btnEliminar">#FF2525</color>
 </resources>

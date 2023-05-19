@@ -8,10 +8,10 @@ import androidx.annotation.Nullable;
 
 public class clsVentas extends SQLiteOpenHelper {
     //Definir la tabla que tendrá la base de datos
-    String tblVendedor = "CREATE TABLE Vendedor (identificacion text primary key, nombre text, email text, contraseña text)";
-    String tblVentas = "CREATE TABLE Ventas (idVenta integer primary key autoincrement, indentificacion text, valorVenta integer)";
+    String tblVendedor = "CREATE TABLE Vendedor (ident text primary key, fullnombre text, email text, contraseña text)";
+    String tblVentas = "CREATE TABLE Ventas (idVenta integer primary key autoincrement, indent text, valorventa integer, fechaventa text)";
 
-    public clsVentas(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public clsVentas(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
