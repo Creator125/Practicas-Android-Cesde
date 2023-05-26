@@ -109,7 +109,9 @@
             <TextView
                 android:id="@+id/tvmensaje"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
+                android:gravity="center"/>
 
             <!--Sesiones de los botones-->
             <LinearLayout
