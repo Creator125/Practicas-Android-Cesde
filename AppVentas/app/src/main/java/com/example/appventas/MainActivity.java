@@ -37,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
         tvMensaje = findViewById(R.id.tvmensaje);
 
         //Eventos
+        btnEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SQLiteDatabase dbw = dbVentas.getWritableDatabase();
+                dbw.execSQL("DELETE FROM Vendedor WHERE ident= '"+etIdent.getText().toString()+"'");
+            }
+        });
+
         btnActualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
