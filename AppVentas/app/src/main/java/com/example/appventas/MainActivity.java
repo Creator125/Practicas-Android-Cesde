@@ -1,8 +1,10 @@
 package com.example.appventas;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -40,8 +42,36 @@ public class MainActivity extends AppCompatActivity {
         btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SQLiteDatabase dbw = dbVentas.getWritableDatabase();
-                dbw.execSQL("DELETE FROM Vendedor WHERE ident= '"+etIdent.getText().toString()+"'");
+                //Verificar que no esté vacia la identificacion
+                if(!etIdent.getText().toString().isEmpty()){
+                    SQLiteDatabase dbr = dbVentas.getReadableDatabase();
+                    String consulta = "SELECT ident, fullnombre, email FROM Vendedor WHERE ident = '"+etIdent.getText().toString()+"'";
+                    //Crear la tabla cursor para crear la tabla cursor para almacenar el regisro en la consulta
+                    Cursor cursorVendedor = dbr.rawQuery(consulta,null);
+                    //Si encuetra el resgistro de indent especifico
+                    if(cursorVendedor.moveToFirst()){
+                        //Comfimar el borrado de vendedor
+                        AlertDialog.Builder adbConfirm = new AlertDialog.Builder(MainActivity.this);
+                        adbConfirm.setMessage("Eliminacion del vendedor");
+                        adbConfirm.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                SQLiteDatabase dbeliminar = dbVentas.getWritableDatabase();
+                                dbeliminar.execSQL("DELETE FROM Vendedor WHERE ident = '"+etIdent.getText().toString()+"'");
+                                tvMensaje.setTextColor(Color.GREEN);
+                                tvMensaje.setText("Vendedor eliminado correctamente");
+                            }
+                        });
+                        adbConfirm.setPositiveButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                    }
+                    tvMensaje.setTextColor(Color.RED);
+
+                }
             }
         });
 
