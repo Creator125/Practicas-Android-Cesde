@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     String oldReferencia;
-    String indexReferencia;
     //Referenciando los id
     EditText etRefencia, etDescripcion, etCosto, etExistencia;
     TextView tvValorIva;
@@ -87,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                     etExistencia.setText(cursorProductos.getString(3));
                     tvValorIva.setText(cursorProductos.getString(4));
                     oldReferencia = etRefencia.getText().toString();
-                    indexReferencia = oldReferencia;
                 }else{
                     Toast.makeText(getApplicationContext(), "La referencia NO Existe. Inténtelo con otra...", Toast.LENGTH_SHORT).show();
                 }
@@ -100,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SQLiteDatabase dbw = dbProductos.getWritableDatabase();
 
-                if(oldReferencia.equals(indexReferencia)){
-                    dbw.execSQL("UPDATE Productos SET referencia ='"+etRefencia.getText().toString()+"', descripcion ='"+etDescripcion.getText().toString()+
-                            "', costo ='"+etCosto.getText().toString()+"', existencia ='"+etExistencia.getText().toString()+"' WHERE referencia = '"+oldReferencia+"'" );
+                if(oldReferencia.equals(etRefencia.getText().toString())){
+                    dbw.execSQL("UPDATE Productos SET descripcion ='"+etDescripcion.getText().toString()+ "', costo ='"+etCosto.getText().toString()+
+                            "', existencia ='"+etExistencia.getText().toString()+"' WHERE referencia = '"+oldReferencia+"'" );
 
                     //Insetando el valor del costo del iva
                     String valorIva = etCosto.getText().toString();
@@ -119,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
                     if(!cProductos.moveToFirst()){
                         dbw.execSQL("UPDATE Productos SET referencia ='"+etRefencia.getText().toString()+"', descripcion ='"+etDescripcion.getText().toString()+
-                                "', costo ='"+etCosto+"', existencia ='"+etExistencia+"' WHERE referencia = '"+oldReferencia+"'" );
+                                "', costo ='"+etCosto.getText().toString()+"', existencia ='"+etExistencia.getText().toString()+"' WHERE referencia = '"+oldReferencia+"'" );
 
                         //Insetando el valor del costo del iva
                         String valorIva = etCosto.getText().toString();
