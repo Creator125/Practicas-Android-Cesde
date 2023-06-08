@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="defineBackground">#A6CCA7</color>
+    <color name="greenbtnGuardar">#205900</color>
+    <color name="graybtnBuscar">#535353</color>
+    <color name="bluebtnActualizar">#0869C3</color>
+    <color name="redbtnEliminar">#D53030</color>
 </resources>
