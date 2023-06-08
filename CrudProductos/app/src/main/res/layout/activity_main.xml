@@ -44,7 +44,7 @@
                     android:id="@+id/etRefencia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Referencia (5 al 20)"
+                    android:hint="Referencia"
                     android:inputType="number"
                     />
             </LinearLayout>
@@ -112,7 +112,7 @@
                     android:id="@+id/etExistencia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Existencia"
+                    android:hint="Existencia (5 al 20)"
                     android:inputType="number"
                     />
             </LinearLayout>

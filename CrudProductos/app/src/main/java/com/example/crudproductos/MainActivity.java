@@ -1,8 +1,10 @@
 package com.example.crudproductos;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -13,12 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+    String oldReferencia;
+    String indexReferencia;
     //Referenciando los id
     EditText etRefencia, etDescripcion, etCosto, etExistencia;
     TextView tvValorIva;
     Button btnGuardar, btnBuscar, btnActualizar, btnEliminar;
     // Instanciar la base de datos de la clase clsVentas
-    String oldReferencia;
     clsProductos dbProductos = new clsProductos(this, "dbProductos", null, 1);
 
     @Override
@@ -38,24 +41,25 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //Boton de guardar
+        //Evento del boton de Guardar
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!etRefencia.getText().toString().isEmpty() && !etDescripcion.getText().toString().isEmpty() &&
                         !etCosto.getText().toString().isEmpty() && !etExistencia.getText().toString().isEmpty()){
                     if(Integer.parseInt(String.valueOf(etCosto.getText())) > 20000){
-                        if(Integer.parseInt(String.valueOf(etExistencia.getText())) >= 5 && Integer.parseInt(String.valueOf(etExistencia.getText())) <= 20){
-                            String valorIva = etCosto.getText().toString();
-                            double calculoIva = Double.parseDouble(valorIva) / 0.19;
+                        String valorIva = etCosto.getText().toString();
+                        double calculoIva = Double.parseDouble(valorIva) / 0.19;
 
-                            guardarProducto(etRefencia.getText().toString(), etDescripcion.getText().toString(),
-                                    etCosto.getText().toString(), etExistencia.getText().toString(), Double.toString(calculoIva));
+                        guardarProducto(etRefencia.getText().toString(), etDescripcion.getText().toString(),
+                                etCosto.getText().toString(), etExistencia.getText().toString(), Double.toString(calculoIva));
 
-                            tvValorIva.setText(Double.toString(Math.round(calculoIva)));
-                        }else{
-                            Toast.makeText(getApplicationContext(), "La existencia del producto debe estar entre 5 y 20", Toast.LENGTH_SHORT).show();
+                        tvValorIva.setText(Double.toString(Math.round(calculoIva)));
+
+                        if(!(Integer.parseInt(String.valueOf(etExistencia.getText())) >= 5 && Integer.parseInt(String.valueOf(etExistencia.getText())) <= 20)){
+                            Toast.makeText(getApplicationContext(), "Es recomendable que la existencia del producto esté entre 5 y 20", Toast.LENGTH_SHORT).show();
                         }
+
                     }else{
                         Toast.makeText(getApplicationContext(), "El costo del producto debe ser superior a 20 mil", Toast.LENGTH_SHORT).show();
                     }
@@ -66,22 +70,122 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Boton de buscar
+        //Evento del boton Buscar
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SQLiteDatabase dbr = dbProductos.getReadableDatabase();
                 // Variable que cotiene la consulta
-                String query = "SELECT referencia, descripcion, costo, existencia, valorIva WHERE referencia = '"+etRefencia.getText().toString()+"'";
+                String query = "SELECT referencia, descripcion, costo, existencia, valorIva FROM Productos WHERE referencia = '"+etRefencia.getText().toString()+"'";
                 // Crear la tabla cursor para almacenar el registro basado en la consulta (query)
                 Cursor cursorProductos = dbr.rawQuery(query, null);
 
                 // Crear la tabla cursor para almacenar el registro basado en la consulta (query)
                 if(cursorProductos.moveToFirst()){ // Si encuentra el ident del producto
-                    etRefencia.setText(cursorProductos.getString(1));
-                    etDescripcion.setText(cursorProductos.getString(2));
-                    etCosto.setText(cursorProductos.getString(3));
+                    etDescripcion.setText(cursorProductos.getString(1));
+                    etCosto.setText(cursorProductos.getString(2));
+                    etExistencia.setText(cursorProductos.getString(3));
+                    tvValorIva.setText(cursorProductos.getString(4));
+                    oldReferencia = etRefencia.getText().toString();
+                    indexReferencia = oldReferencia;
+                }else{
+                    Toast.makeText(getApplicationContext(), "La referencia NO Existe. Inténtelo con otra...", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        //Evento del boton Actualizar
+        btnActualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SQLiteDatabase dbw = dbProductos.getWritableDatabase();
+
+                if(oldReferencia.equals(indexReferencia)){
+                    dbw.execSQL("UPDATE Productos SET referencia ='"+etRefencia.getText().toString()+"', descripcion ='"+etDescripcion.getText().toString()+
+                            "', costo ='"+etCosto.getText().toString()+"', existencia ='"+etExistencia.getText().toString()+"' WHERE referencia = '"+oldReferencia+"'" );
+
+                    //Insetando el valor del costo del iva
+                    String valorIva = etCosto.getText().toString();
+                    double calculoIva = Double.parseDouble(valorIva) / 0.19;
+                    tvValorIva.setText(Double.toString(Math.round(calculoIva)));
+
+                    dbw.execSQL("UPDATE Productos SET valorIva = '"+tvValorIva.getText().toString()+"' WHERE '"+oldReferencia+"'");
+
+                    Toast.makeText(getApplicationContext(), "Producto acutualizado correctamente", Toast.LENGTH_SHORT).show();
+                }else{ //No son iguales
+                    SQLiteDatabase dbr = dbProductos.getReadableDatabase();
+                    String sql = "SELECT referencia FROM Productos WHERE referencia = '"+etRefencia.getText().toString()+"'";
+                    Cursor cProductos = dbr.rawQuery(sql, null);
+
+                    if(!cProductos.moveToFirst()){
+                        dbw.execSQL("UPDATE Productos SET referencia ='"+etRefencia.getText().toString()+"', descripcion ='"+etDescripcion.getText().toString()+
+                                "', costo ='"+etCosto+"', existencia ='"+etExistencia+"' WHERE referencia = '"+oldReferencia+"'" );
+
+                        //Insetando el valor del costo del iva
+                        String valorIva = etCosto.getText().toString();
+                        double calculoIva = Double.parseDouble(valorIva) / 0.19;
+                        tvValorIva.setText(Double.toString(Math.round(calculoIva)));
+
+                        dbw.execSQL("UPDATE Productos SET valorIva = '"+tvValorIva.getText().toString()+"' WHERE '"+oldReferencia+"'");
+
+                        Toast.makeText(getApplicationContext(), "Producto acutualizado correctamente", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "La referencia del producto ya existe Intente con otra...", Toast.LENGTH_SHORT).show();
+                    }
+                    dbr.close();
+                }
+                dbw.close();
+            }
+        });
+
+        //Evento del boton Eliminar
+        btnEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Integer.parseInt(String.valueOf(etExistencia.getText())) == 0){
+                    // Verificar que no esté vacía la referencia
+                    if(!etRefencia.getText().toString().isEmpty()){
+                        //Buscar la referencia
+                        SQLiteDatabase dbr = dbProductos.getReadableDatabase();
+                        //Variable que contiene la consulta
+                        String query = "SELECT referencia FROM Productos WHERE referencia ='"+etRefencia.getText().toString()+"'";
+                        // Crear la tabla cursor para almacenar el registro basado en la consulta (query)
+                        Cursor cursorProductos = dbr.rawQuery(query, null);
+
+                        // Si encuentra el registro con el ident específico
+                        if(cursorProductos.moveToFirst()){
+                            Toast.makeText(getApplicationContext(), "Entra...", Toast.LENGTH_SHORT).show();
+
+                            // encuentra la identificacion
+                            // Confirmar el borrado del vendedor
+                            AlertDialog.Builder adbConfirm = new AlertDialog.Builder(MainActivity.this);
+                            adbConfirm.setMessage("Eliminacion del producto");
+                            adbConfirm.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    SQLiteDatabase dbElimninar = dbProductos.getWritableDatabase();
+                                    dbElimninar.execSQL("DELETE FROM Productos WHERE referencia ='"+etRefencia.getText().toString()+"'");
+
+                                    Toast.makeText(getApplicationContext(), "Producto eliminado correctamente", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                            adbConfirm.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+                            AlertDialog alertDialog = adbConfirm.create();
+                            alertDialog.show();
+                        }
+                    }else{
+                        Toast.makeText(getApplicationContext(), "La referencia NO EXISTE. Intentelo con otra", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), "La existencia debe ser 0", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
