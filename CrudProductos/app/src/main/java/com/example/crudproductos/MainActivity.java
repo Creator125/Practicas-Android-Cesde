@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
     String oldReferencia;
     //Referenciando los id
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         btnBuscar = findViewById(R.id.btnBuscar);
         btnActualizar = findViewById(R.id.btnActualizar);
         btnEliminar = findViewById(R.id.btnEliminar);
+        DecimalFormat numdecilformat = new DecimalFormat("###,###,###,###.##");
 
 
 
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         guardarProducto(etRefencia.getText().toString(), etDescripcion.getText().toString(),
                                 etCosto.getText().toString(), etExistencia.getText().toString(), Double.toString(calculoIva));
 
-                        tvValorIva.setText(Double.toString(Math.round(calculoIva)));
+                        tvValorIva.setText(numdecilformat.format(calculoIva));
 
                         if(!(Integer.parseInt(String.valueOf(etExistencia.getText())) >= 5 && Integer.parseInt(String.valueOf(etExistencia.getText())) <= 20)){
                             Toast.makeText(getApplicationContext(), "Es recomendable que la existencia del producto esté entre 5 y 20", Toast.LENGTH_SHORT).show();
@@ -105,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                     //Insetando el valor del costo del iva
                     String valorIva = etCosto.getText().toString();
                     double calculoIva = Double.parseDouble(valorIva) / 0.19;
-                    tvValorIva.setText(Double.toString(Math.round(calculoIva)));
+                    tvValorIva.setText(numdecilformat.format(calculoIva));
 
                     dbw.execSQL("UPDATE Productos SET valorIva = '"+tvValorIva.getText().toString()+"' WHERE '"+oldReferencia+"'");
 
@@ -122,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                         //Insetando el valor del costo del iva
                         String valorIva = etCosto.getText().toString();
                         double calculoIva = Double.parseDouble(valorIva) / 0.19;
-                        tvValorIva.setText(Double.toString(Math.round(calculoIva)));
+                        tvValorIva.setText(numdecilformat.format(calculoIva));
 
                         dbw.execSQL("UPDATE Productos SET valorIva = '"+tvValorIva.getText().toString()+"' WHERE '"+oldReferencia+"'");
 
@@ -163,6 +166,12 @@ public class MainActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     SQLiteDatabase dbElimninar = dbProductos.getWritableDatabase();
                                     dbElimninar.execSQL("DELETE FROM Productos WHERE referencia ='"+etRefencia.getText().toString()+"'");
+
+                                    etRefencia.setText("");
+                                    etDescripcion.setText("");
+                                    etCosto.setText("");
+                                    etExistencia.setText("");
+                                    tvValorIva.setText("");
 
                                     Toast.makeText(getApplicationContext(), "Producto eliminado correctamente", Toast.LENGTH_SHORT).show();
                                 }

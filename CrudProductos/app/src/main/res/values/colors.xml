@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="defineBackground">#A6CCA7</color>
+    <color name="titleform">#2D0081</color>
     <color name="greenbtnGuardar">#205900</color>
     <color name="graybtnBuscar">#535353</color>
     <color name="bluebtnActualizar">#0869C3</color>

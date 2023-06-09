@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/defineBackground">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,6 +21,7 @@
                 android:text="CRUD de Productos"
                 android:textSize="30dp"
                 android:textStyle="bold"
+                android:textColor="#02196A"
                 android:gravity="center"
                 android:layout_marginTop="20dp"
                 />
@@ -36,6 +38,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/titleform"
                     android:text="Referencia"
                     android:textSize="24dp"
                     android:textStyle="bold"
@@ -44,8 +47,8 @@
                     android:id="@+id/etRefencia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:hint="Referencia"
-                    android:inputType="number"
                     />
             </LinearLayout>
 
@@ -62,11 +65,13 @@
                     android:text="Descripción"
                     android:textSize="24dp"
                     android:textStyle="bold"
+                    android:textColor="@color/titleform"
                     />
                 <EditText
                     android:id="@+id/etDescripcion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:hint="Descripción"
                     />
             </LinearLayout>
@@ -84,11 +89,13 @@
                     android:text="Costo"
                     android:textSize="24dp"
                     android:textStyle="bold"
+                    android:textColor="@color/titleform"
                     />
                 <EditText
                     android:id="@+id/etCosto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:hint="Costo"
                     android:inputType="number"
                     />
@@ -107,12 +114,14 @@
                     android:text="Existencia"
                     android:textSize="24dp"
                     android:textStyle="bold"
+                    android:textColor="@color/titleform"
                     />
                 <EditText
                     android:id="@+id/etExistencia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Existencia (5 al 20)"
+                    android:textColor="@color/black"
                     android:inputType="number"
                     />
             </LinearLayout>
@@ -130,11 +139,13 @@
                     android:text="Valor IVA"
                     android:textSize="24dp"
                     android:textStyle="bold"
+                    android:textColor="@color/titleform"
                     />
                 <TextView
                     android:id="@+id/tvValorIva"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:textSize="30dp">
                 </TextView>
             </LinearLayout>
@@ -151,6 +162,7 @@
                     android:text="Guardar"
                     android:textAllCaps="false"
                     android:layout_marginRight="10dp"
+                    android:backgroundTint="@color/greenbtnGuardar"
                     />
                 <Button
                     android:id="@+id/btnBuscar"
@@ -158,6 +170,7 @@
                     android:layout_height="wrap_content"
                     android:text="Buscar"
                     android:textAllCaps="false"
+                    android:backgroundTint="@color/graybtnBuscar"
                     />
             </LinearLayout>
             <LinearLayout
@@ -171,6 +184,7 @@
                     android:text="Actualizar"
                     android:textAllCaps="false"
                     android:layout_marginRight="10dp"
+                    android:backgroundTint="@color/bluebtnActualizar"
                     />
                 <Button
                     android:id="@+id/btnEliminar"
@@ -178,6 +192,7 @@
                     android:layout_height="wrap_content"
                     android:text="Eliminar"
                     android:textAllCaps="false"
+                    android:backgroundTint="@color/redbtnEliminar"
                     />
             </LinearLayout>
 
