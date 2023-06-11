@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Instaciar la base de datos de clsVentas
     clsVentas dbVentas = new clsVentas(this, "dbVentas", null, 1);
-    String oldClient;
+    String oldIdent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +58,22 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 SQLiteDatabase dbeliminar = dbVentas.getWritableDatabase();
                                 dbeliminar.execSQL("DELETE FROM Vendedor WHERE ident = '"+etIdent.getText().toString()+"'");
-                                tvMensaje.setTextColor(Color.GREEN);
+                                tvMensaje.setTextColor(Color.rgb(8, 88, 32));
                                 tvMensaje.setText("Vendedor eliminado correctamente");
                             }
                         });
-                        adbConfirm.setPositiveButton("NO", new DialogInterface.OnClickListener() {
+                        adbConfirm.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
                             }
                         });
+                        AlertDialog alertDialog = adbConfirm.create();
+                        alertDialog.show();
+                    }else{
+                        tvMensaje.setTextColor(Color.rgb(133, 8, 13));
+                        tvMensaje.setText("Identificación NO EXISTE. Inténtelo con otra...");
                     }
-                    tvMensaje.setTextColor(Color.RED);
 
                 }
             }
@@ -79,15 +83,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SQLiteDatabase dbw = dbVentas.getWritableDatabase();
-                if(oldClient.equals(etIdent.getText().toString())){
-
-                    dbw.execSQL("UPDATE Vededor SET fullnombe='"+etFullnombre.getText().toString()+"' email="+etEmail.getText().toString()+"' contraseña= '"+etContrasena.getText().toString()+"' WHERE ident ='"+etIdent.getText().toString());
+                if(oldIdent.equals(etIdent.getText().toString())){
+                    dbw.execSQL("UPDATE Vendedor SET fullnombre='"+etFullnombre.getText().toString()+"', email='"+etEmail.getText().toString()+"', contraseña='"+etContrasena.getText().toString()+"' WHERE ident ='"+oldIdent+"'");
+                    tvMensaje.setText("Vendedor actualizado correctamente");
+                    tvMensaje.setTextColor(Color.rgb(8, 88, 32));
                 }else{
                     SQLiteDatabase dbr = dbVentas.getReadableDatabase();
                     String sql = "SELECT ident FROM Vendedor WHERE ident = '"+etIdent.getText().toString()+"'";
                     Cursor cVendedor = dbr.rawQuery(sql, null);
 
+                    if(!cVendedor.moveToFirst()){
+                        dbw.execSQL("UPDATE Vendedor SET ident= '"+etIdent.getText().toString()+"', fullnombre='"+etFullnombre.getText().toString()+"', email='"+etEmail.getText().toString()+"', contraseña='"+etContrasena.getText().toString()+"' WHERE ident ='"+oldIdent+"'");
+                        tvMensaje.setText("Vendedor actualizado correctamente");
+                        tvMensaje.setTextColor(Color.rgb(8, 88, 32));
+                    }else{
+                        tvMensaje.setText("La identificación del vendedor YA EXISTE. Inténtelo con otra ...");
+                        tvMensaje.setTextColor(Color.rgb(133, 8, 13));
+                    }
+                    dbr.close();
                 }
+                dbw.close();
             }
         });
 
@@ -103,20 +118,21 @@ public class MainActivity extends AppCompatActivity {
                     etFullnombre.setText(cursorVendedor.getString(1));
                     etEmail.setText(cursorVendedor.getString(2));
                     tvMensaje.setText("");
-                    oldClient = etIdent.getText().toString();
+                    oldIdent = etIdent.getText().toString();
                 }else{
-                    tvMensaje.setTextColor(Color.RED);
-                    tvMensaje.setText("La indetificacion del cliente no existe. Intentelo con otro");
+                    tvMensaje.setTextColor(Color.rgb(133, 8, 13));
+                    tvMensaje.setText("La indetificacion del cliente NO Existe. Intentelo con otro");
                 }
             }
         });
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!etIdent.getText().toString().isEmpty() && !etFullnombre.getText().toString().isEmpty() && !etEmail.getText().toString().isEmpty() && !etContrasena.getText().toString().isEmpty()){
+                if(!etIdent.getText().toString().isEmpty() && !etFullnombre.getText().toString().isEmpty() &&
+                        !etEmail.getText().toString().isEmpty() && !etContrasena.getText().toString().isEmpty()){
                     guardaVendedor(etIdent.getText().toString(), etFullnombre.getText().toString(), etEmail.getText().toString(), etContrasena.getText().toString());
                 }else{
-                    tvMensaje.setTextColor(Color.RED);
+                    tvMensaje.setTextColor(Color.rgb(133, 8, 13));
                     tvMensaje.setText("Todos los datos son obligatorios");
                 }
             }
@@ -140,11 +156,11 @@ public class MainActivity extends AppCompatActivity {
             cVendedor.put("contraseña", sContrasena);
             dbw.insert("Vendedor", null, cVendedor);
             dbw.close();
-            tvMensaje.setTextColor(Color.GREEN);
+            tvMensaje.setTextColor(Color.rgb(8, 88, 32));
             tvMensaje.setText("Vendedor agregado correctamente");
         }else{
             tvMensaje.setText("La identificacion del vendedor YA EXISTE. Intentelo con otra");
-            tvMensaje.setTextColor(Color.RED);
+            tvMensaje.setTextColor(Color.rgb(133, 8, 13));
         }
     }
 }
