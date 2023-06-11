@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         !etCosto.getText().toString().isEmpty() && !etExistencia.getText().toString().isEmpty()){
                     if(Integer.parseInt(String.valueOf(etCosto.getText())) > 20000){
                         String valorIva = etCosto.getText().toString();
-                        double calculoIva = Double.parseDouble(valorIva) / 0.19;
+                        double calculoIva = Double.parseDouble(valorIva) + (Double.parseDouble(valorIva) * 0.19);
 
                         guardarProducto(etRefencia.getText().toString(), etDescripcion.getText().toString(),
                                 etCosto.getText().toString(), etExistencia.getText().toString(), Double.toString(calculoIva));
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //Insetando el valor del costo del iva
                     String valorIva = etCosto.getText().toString();
-                    double calculoIva = Double.parseDouble(valorIva) / 0.19;
+                    double calculoIva = Double.parseDouble(valorIva) + (Double.parseDouble(valorIva) * 0.19);
                     tvValorIva.setText(numdecilformat.format(calculoIva));
 
                     dbw.execSQL("UPDATE Productos SET valorIva = '"+tvValorIva.getText().toString()+"' WHERE '"+oldReferencia+"'");
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
                         //Insetando el valor del costo del iva
                         String valorIva = etCosto.getText().toString();
-                        double calculoIva = Double.parseDouble(valorIva) / 0.19;
+                        double calculoIva = Double.parseDouble(valorIva) + (Double.parseDouble(valorIva) * 0.19);
                         tvValorIva.setText(numdecilformat.format(calculoIva));
 
                         dbw.execSQL("UPDATE Productos SET valorIva = '"+tvValorIva.getText().toString()+"' WHERE '"+oldReferencia+"'");
