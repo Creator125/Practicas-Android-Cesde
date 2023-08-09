@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <Button
+        android:id="@+id/btclientes"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:onClick="Clientes"
+        android:textSize="25dp"
+        android:layout_marginTop="200dp"
+        android:layout_gravity="center"
+        android:backgroundTint="#35AEAE"
+        android:text="Clientes"/>
+
+    <Button
+        android:id="@+id/btvehiculos"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:onClick="Vehiculos"
+        android:textSize="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:backgroundTint="#AE8B0E"
+        android:text="Vehiculos" />
+
+    <Button
+        android:id="@+id/btfacturas"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:onClick="Facturas"
+        android:textSize="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:backgroundTint="#18369F"
+        android:text="Facturas" />
+
+</LinearLayout>
