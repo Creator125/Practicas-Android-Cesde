@@ -34,7 +34,11 @@ public class ClsOpenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE TblDetalle_Factura");
         db.execSQL("DROP TABLE TblFacturas");
-        db.execSQL("");
+        db.execSQL("DROP TABLE TblClietes");
+        db.execSQL("DROP TABLE TblVehiculos");{
+        onCreate(db);
     }
+
+}
 
     }
