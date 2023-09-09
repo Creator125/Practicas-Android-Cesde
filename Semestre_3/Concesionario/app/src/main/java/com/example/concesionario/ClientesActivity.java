@@ -50,7 +50,7 @@ public class ClientesActivity extends AppCompatActivity {
         }else{
             //abrir base de datos en modo lectura
             SQLiteDatabase db=admin.getReadableDatabase();
-            Cursor registro=db.rawQuery("select * from TblCliente where Ident_cliente='"+identificacion+"'",null);
+            Cursor registro=db.rawQuery("select * from TblClietes where IdCliente='"+identificacion+"'",null);
             if (registro.moveToNext()){
                 sw = true;
                 //el registro existe
@@ -88,14 +88,14 @@ public class ClientesActivity extends AppCompatActivity {
             ContentValues fila=new ContentValues();
             //Llenar el contendor
             fila.put("IdCliente",identificacion);
-            fila.put("Nom_cliente",nombre);
-            fila.put("Dir_cliente",direccion);
-            fila.put("Tel_cliente",telefono);
+            fila.put("NomCliente",nombre);
+            fila.put("DireCliente",direccion);
+            fila.put("TelCliente",telefono);
             if(sw == false){
-                respuesta=db.insert("TblCliente",null,fila);
+                respuesta=db.insert("TblClietes",null,fila);
             }else{
                 sw = false;
-                respuesta = db.update("TblCliente", fila, "IdCliente = '"+identificacion+"'");
+                respuesta = db.update("TblClietes", fila, "IdCliente = '"+identificacion+"'", null);
             }
 
             if (respuesta > 0){
@@ -114,7 +114,7 @@ public class ClientesActivity extends AppCompatActivity {
         SQLiteDatabase db = admin.getWritableDatabase();
         ContentValues fila = new ContentValues();
         fila.put("Activo", "No");
-        respuesta = db.update("TblCliente", fila, "IdCliente = '"+identificacion+"'");
+        respuesta = db.update("TblCliente", fila, "IdCliente = '"+identificacion+"'", null);
         if (respuesta > 0){
             Toast.makeText(this, "Registro anulado", Toast.LENGTH_SHORT).show();
             Limpiar_campos();
@@ -127,6 +127,11 @@ public class ClientesActivity extends AppCompatActivity {
     public void Cancelar(View view){
         Limpiar_campos();
     }//fin metodo Cancelar
+
+    public void  Listar(View view){
+        Intent intListar = new Intent(this, ListarClientesActivity.class);
+        startActivity(intListar);
+    }
 
     public void Regresar(View view){
         Intent intmain=new Intent(this,MainActivity.class);

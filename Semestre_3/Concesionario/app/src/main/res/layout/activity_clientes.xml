@@ -119,6 +119,8 @@
             android:text="Anular" />
     </LinearLayout>
 
+
+
     <LinearLayout
         android:layout_width="370dp"
         android:layout_height="55dp"
@@ -134,6 +136,24 @@
             android:onClick="Cancelar"
             android:text="Cancelar"
             android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/btgenerar"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:textSize="25dp"
+            android:onClick="Listar"
+            android:layout_marginLeft="7dp"
+            android:layout_weight="1"
+            android:text="Listar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="370dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="7dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btregresar"
