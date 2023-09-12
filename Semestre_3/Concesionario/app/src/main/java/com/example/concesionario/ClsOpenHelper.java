@@ -14,7 +14,7 @@ public class ClsOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //Tabla de clientes
-        db.execSQL("CREATE TABLE TblClietes(IdCliente TEXT PRIMARY KEY, " +
+        db.execSQL("CREATE TABLE TblClientes(IdCliente TEXT PRIMARY KEY, " +
                 "NomCliente TEXT NOT NULL, DireCliente TEXT NOT NULL ," +
                 "TelCliente TEXT NOT NULL, Activo TEXT DEFAULT 'Si')");
         //Tabla de Vehiculos
@@ -36,7 +36,7 @@ public class ClsOpenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE TblDetalle_Factura");
         db.execSQL("DROP TABLE TblFacturas");
-        db.execSQL("DROP TABLE TblClietes");
+        db.execSQL("DROP TABLE TblClientes");
         db.execSQL("DROP TABLE TblVehiculos");{
         onCreate(db);
     }

@@ -50,7 +50,7 @@ public class ClientesActivity extends AppCompatActivity {
         }else{
             //abrir base de datos en modo lectura
             SQLiteDatabase db=admin.getReadableDatabase();
-            Cursor registro=db.rawQuery("select * from TblClietes where IdCliente='"+identificacion+"'",null);
+            Cursor registro=db.rawQuery("select * from TblClientes where IdCliente='"+identificacion+"'",null);
             if (registro.moveToNext()){
                 sw = true;
                 //el registro existe
@@ -92,10 +92,10 @@ public class ClientesActivity extends AppCompatActivity {
             fila.put("DireCliente",direccion);
             fila.put("TelCliente",telefono);
             if(sw == false){
-                respuesta=db.insert("TblClietes",null,fila);
+                respuesta=db.insert("TblClientes",null,fila);
             }else{
                 sw = false;
-                respuesta = db.update("TblClietes", fila, "IdCliente = '"+identificacion+"'", null);
+                respuesta = db.update("TblClientes", fila, "IdCliente = '"+identificacion+"'", null);
             }
 
             if (respuesta > 0){
