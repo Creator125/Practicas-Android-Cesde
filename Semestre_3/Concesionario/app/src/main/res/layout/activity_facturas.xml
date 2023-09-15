@@ -40,6 +40,7 @@
             android:layout_width="198dp"
             android:layout_height="55dp"
             android:layout_weight="1"
+            android:onClick="Consultar"
             android:text="Consultar"
             android:textSize="25dp" />
     </LinearLayout>
