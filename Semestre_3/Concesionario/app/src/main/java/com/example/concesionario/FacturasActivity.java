@@ -17,7 +17,7 @@ public class FacturasActivity extends AppCompatActivity {
     TextView tvnombre,tvtelefono,tvmarca,tvvalor;
     CheckBox cbactivo;
     Button btadicionar,btanular;
-    String codigo;
+    String codigo, idenCliente, placa;
     ClsOpenHelper admin = new ClsOpenHelper(this,"Concesionario.db",null,1);
 
     @Override
@@ -50,11 +50,11 @@ public class FacturasActivity extends AppCompatActivity {
             SQLiteDatabase db = admin.getReadableDatabase();
             Cursor registro = db.rawQuery("SELECT Fecha, TblFacturas.IdCliente, " +
                     "NomCliente, TelCliente, TblDetalle_Factura.Placa, Marca, Valor, " +
-                    "TblFacturas.Activo FROM TblClientes INNER JOIN TblFacturas ON" +
-                    "TblClientes.IdCliente = TblFacturas.IdCliente INNER JOIN" +
+                    "TblFacturas.Activo FROM TblClientes INNER JOIN TblFacturas ON " +
+                    "TblClientes.IdCliente = TblFacturas.IdCliente INNER JOIN " +
                     "TblDetalle_Factura ON TblFacturas.CodFacturas =" +
-                    "TblDetalle_Factura.CodFacturas INNER JOIN TblVehiculos ON" +
-                    "TblDetalle_Factura.Placa = TblVehiculos.Placa WHERE" +
+                    "TblDetalle_Factura.CodFactura INNER JOIN TblVehiculos ON " +
+                    "TblDetalle_Factura.Placa = TblVehiculos.Placa WHERE " +
                     "TblFacturas.CodFacturas = '"+codigo+"'", null);
 
             if (registro.moveToNext()){
@@ -80,4 +80,54 @@ public class FacturasActivity extends AppCompatActivity {
             etcodigo.requestFocus();
         }
     }//Fin metodo Consultar
+
+    //Metodo de ConsultarCliente
+    public void ConsultarCliente(View view) {
+        idenCliente = etidentificacion.getText().toString();
+
+        //Validar que los campos no estan vacios
+        if (idenCliente.isEmpty()) {
+            Toast.makeText(this, "La identificacion del cliente es requerida", Toast.LENGTH_SHORT).show();
+            etidentificacion.requestFocus();
+        } else {
+            //abrir base de datos en modo lectura
+            SQLiteDatabase db = admin.getReadableDatabase();
+            Cursor registro = db.rawQuery("select * from TblClientes where IdCliente='" + idenCliente + "'", null);
+
+            if (registro.moveToNext()) {
+                //el registro existe
+                tvnombre.setText(registro.getString(1));
+                tvtelefono.setText(registro.getString(3));
+            } else {
+                Toast.makeText(this, "Cliente no registrado", Toast.LENGTH_SHORT).show();
+            }
+
+            db.close();
+        }//Fin metodo ConsultarCliente
+    }
+
+    //Metodo de consultar Vehiculos
+    public void ConsultarVehiculo(View view) {
+        placa = etplaca.getText().toString();
+
+        //Validar que los campos no estan vacios
+        if (placa.isEmpty()) {
+            Toast.makeText(this, "La identificacion del cliente es requerida", Toast.LENGTH_SHORT).show();
+            etplaca.requestFocus();
+        } else {
+            //abrir base de datos en modo lectura
+            SQLiteDatabase db = admin.getReadableDatabase();
+            Cursor registro = db.rawQuery("select * from TblVehiculos where Placa='" + placa + "'", null);
+
+            if (registro.moveToNext()) {
+                //el registro existe
+                tvmarca.setText(registro.getString(2));
+                tvvalor.setText(registro.getString(3));
+            } else {
+                Toast.makeText(this, "Vehiculo no registrado", Toast.LENGTH_SHORT).show();
+            }
+
+            db.close();
+        }//Fin metodo de ConsultarVehiculo
+    }
 }
