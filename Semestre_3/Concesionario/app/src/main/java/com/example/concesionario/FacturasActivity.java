@@ -2,6 +2,7 @@ package com.example.concesionario;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -17,8 +18,10 @@ public class FacturasActivity extends AppCompatActivity {
     TextView tvnombre,tvtelefono,tvmarca,tvvalor;
     CheckBox cbactivo;
     Button btadicionar,btanular;
-    String codigo, idenCliente, placa;
+    String codigo, idenCliente, placa, fecha, codigoFactura;
     ClsOpenHelper admin = new ClsOpenHelper(this,"Concesionario.db",null,1);
+    long respuesta;
+    boolean sw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class FacturasActivity extends AppCompatActivity {
         cbactivo = findViewById(R.id.cbactivo);
         btadicionar = findViewById(R.id.btadicionar);
         btanular = findViewById(R.id.btanular);
+        sw = false;
         etcodigo.requestFocus();
     }//Fin metodo onCreate
 
@@ -128,6 +132,39 @@ public class FacturasActivity extends AppCompatActivity {
             }
 
             db.close();
-        }//Fin metodo de ConsultarVehiculo
+        }
+    }//Fin metodo de ConsultarVehiculo
+
+    //Metodo de adicionar
+    public void Adicionar(View view){
+        codigoFactura = etcodigo.getText().toString();
+        fecha = etfecha.getText().toString();
+        idenCliente = etidentificacion.getText().toString();
+        placa = etplaca.getText().toString();
+
+        //Validar que los campos no estan vacios
+        if (!fecha.isEmpty() && !idenCliente.isEmpty() && !placa.isEmpty()){
+            SQLiteDatabase db= admin.getWritableDatabase();
+            ContentValues fila= new ContentValues();
+            ContentValues filadetallefactura = new ContentValues();
+            //Llenar el contendor
+            fila.put("CodFacturas",codigoFactura);
+            fila.put("Fecha",fecha);
+            fila.put("IdCliente", idenCliente);
+            filadetallefactura.put("Placa",placa);
+            if(sw == false){
+                respuesta=db.insert("TblFacturas",null,fila);
+                respuesta=db.insert("TblDetalle_Factura",null,filadetallefactura);
+            }
+
+            if (respuesta > 0){
+                Toast.makeText(this, "Registro guardado", Toast.LENGTH_SHORT).show();
+                //Limpiar_campos();
+            }else
+                Toast.makeText(this, "Error guardando registro", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Todos los datos son requeridos", Toast.LENGTH_SHORT).show();
+            etfecha.requestFocus();
+        }
     }
 }
