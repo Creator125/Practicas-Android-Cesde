@@ -184,6 +184,7 @@
             android:id="@+id/btadicionar"
             android:layout_width="95dp"
             android:layout_height="55dp"
+            android:onClick="Adicionar"
             android:layout_weight="1"
             android:text="Adicionar"
             android:textSize="25dp" />

@@ -18,7 +18,7 @@ public class FacturasActivity extends AppCompatActivity {
     TextView tvnombre,tvtelefono,tvmarca,tvvalor;
     CheckBox cbactivo;
     Button btadicionar,btanular;
-    String codigo, idenCliente, placa, fecha, codigoFactura;
+    String codigo, idenCliente, placa, fecha, codigoFactura, vehiculoActivo;
     ClsOpenHelper admin = new ClsOpenHelper(this,"Concesionario.db",null,1);
     long respuesta;
     boolean sw;
@@ -142,29 +142,67 @@ public class FacturasActivity extends AppCompatActivity {
         idenCliente = etidentificacion.getText().toString();
         placa = etplaca.getText().toString();
 
-        //Validar que los campos no estan vacios
-        if (!fecha.isEmpty() && !idenCliente.isEmpty() && !placa.isEmpty()){
-            SQLiteDatabase db= admin.getWritableDatabase();
-            ContentValues fila= new ContentValues();
-            ContentValues filadetallefactura = new ContentValues();
-            //Llenar el contendor
-            fila.put("CodFacturas",codigoFactura);
-            fila.put("Fecha",fecha);
-            fila.put("IdCliente", idenCliente);
-            filadetallefactura.put("Placa",placa);
-            if(sw == false){
-                respuesta=db.insert("TblFacturas",null,fila);
-                respuesta=db.insert("TblDetalle_Factura",null,filadetallefactura);
+        //Consultar la tabla de vehiculos
+
+        SQLiteDatabase DB = admin.getReadableDatabase();
+        /*Cursor registro= db.rawQuery("select * from TblVehiculos where Placa='"+placa+"'",null);
+        boolean vehiculoDisponible = false;
+
+        if(registro.moveToNext()){
+            if(registro.getString(4).equals("Si")){
+                vehiculoDisponible = true;
+            }
+        }else{
+            vehiculoDisponible = false;
+        }
+
+         */
+
+        DB.close();
+            //Validar que los campos no estan vacios
+            if (!fecha.isEmpty() && !idenCliente.isEmpty() && !placa.isEmpty()){
+                //Verificar si el vehiculo está activo
+                /*if (vehiculoDisponible){
+
+                }else{
+                    Toast.makeText(this, "El carro no está disponible", Toast.LENGTH_SHORT).show();
+                }
+                */
+
+
+                SQLiteDatabase db = admin.getWritableDatabase();
+                ContentValues fila= new ContentValues();
+                ContentValues filadetallefactura = new ContentValues();
+                //Llenar el contendor
+                fila.put("CodFacturas",codigoFactura);
+                fila.put("Fecha",fecha);
+                fila.put("IdCliente", idenCliente);
+                filadetallefactura.put("Placa",placa);
+                if(sw == false){
+                    respuesta=db.insert("TblFacturas",null,fila);
+                    respuesta=db.insert("TblDetalle_Factura",null,filadetallefactura);
+                }
+
+                if (respuesta > 0){
+                    Toast.makeText(this, "Registro guardado", Toast.LENGTH_SHORT).show();
+                    anularVehiculo();
+                    //Limpiar_campos();
+                }else {
+                    Toast.makeText(this, "Error guardando registro", Toast.LENGTH_SHORT).show();
+                }
+
+            }else{
+                Toast.makeText(this, "Todos los datos son requeridos", Toast.LENGTH_SHORT).show();
+                etfecha.requestFocus();
             }
 
-            if (respuesta > 0){
-                Toast.makeText(this, "Registro guardado", Toast.LENGTH_SHORT).show();
-                //Limpiar_campos();
-            }else
-                Toast.makeText(this, "Error guardando registro", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, "Todos los datos son requeridos", Toast.LENGTH_SHORT).show();
-            etfecha.requestFocus();
-        }
     }
+
+    //Metodo para anular vehiculo
+    private void anularVehiculo(){
+        SQLiteDatabase db = admin.getWritableDatabase();
+        ContentValues fila = new ContentValues();
+        fila.put("Activo", "No");
+        respuesta = db.update("TblVehiculos", fila, "Placa = '"+placa+"'", null);
+    }//Fin metodo anularVehiculo
 }
