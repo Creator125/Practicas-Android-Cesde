@@ -20,7 +20,7 @@ public class FacturasActivity extends AppCompatActivity {
     Button btadicionar,btanular;
     String codigo, idenCliente, placa, fecha, codigoFactura, vehiculoActivo;
     ClsOpenHelper admin = new ClsOpenHelper(this,"Concesionario.db",null,1);
-    long respuesta;
+    long respuesta1, respuesta2, respuesta;
     boolean sw;
 
     @Override
@@ -161,29 +161,22 @@ public class FacturasActivity extends AppCompatActivity {
         DB.close();
             //Validar que los campos no estan vacios
             if (!fecha.isEmpty() && !idenCliente.isEmpty() && !placa.isEmpty()){
-                //Verificar si el vehiculo está activo
-                /*if (vehiculoDisponible){
-
-                }else{
-                    Toast.makeText(this, "El carro no está disponible", Toast.LENGTH_SHORT).show();
-                }
-                */
-
-
                 SQLiteDatabase db = admin.getWritableDatabase();
-                ContentValues fila= new ContentValues();
-                ContentValues filadetallefactura = new ContentValues();
-                //Llenar el contendor
-                fila.put("CodFacturas",codigoFactura);
-                fila.put("Fecha",fecha);
-                fila.put("IdCliente", idenCliente);
-                filadetallefactura.put("Placa",placa);
-                if(sw == false){
-                    respuesta=db.insert("TblFacturas",null,fila);
-                    respuesta=db.insert("TblDetalle_Factura",null,filadetallefactura);
-                }
+                ContentValues filaFactura = new ContentValues();
+                ContentValues filaDetalleFactura = new ContentValues();
 
-                if (respuesta > 0){
+                // Llenar los ContentValues con los datos correspondientes
+                filaFactura.put("CodFacturas", codigoFactura);
+                filaFactura.put("Fecha", fecha);
+                filaFactura.put("IdCliente", idenCliente);
+
+                filaDetalleFactura.put("CodFactura", codigoFactura);
+                filaDetalleFactura.put("Placa", placa);
+
+                    respuesta1=db.insert("TblFacturas",null,filaFactura);
+                    respuesta2=db.insert("TblDetalle_Factura",null,filaDetalleFactura);
+
+                if (respuesta1 > 0 && respuesta2 > 0){
                     Toast.makeText(this, "Registro guardado", Toast.LENGTH_SHORT).show();
                     anularVehiculo();
                     //Limpiar_campos();
