@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tvtitulo"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_marginTop="70dp"
+        android:text="Estudiantes" />
+
+    <LinearLayout
+        android:layout_width="370dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etcarnet"
+            android:layout_width="174dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Nro carnet"
+            android:inputType="number"
+            android:textSize="28dp" />
+
+        <Button
+            android:id="@+id/btconsultar"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:textSize="23dp"
+            android:layout_marginLeft="7dp"
+            android:layout_weight="1"
+            android:text="Consultar"
+            android:onClick="Consultar"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/etnombre"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Nombre estudiante"
+        android:enabled="false"/>
+
+    <EditText
+        android:id="@+id/etcarrera"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Carrera que estudia"
+        android:enabled="false"/>
+
+    <EditText
+        android:id="@+id/etsemestre"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Semestre"
+        android:enabled="false"/>
+
+    <CheckBox
+        android:id="@+id/cbactivo"
+        android:layout_width="370dp"
+        android:layout_height="60dp"
+        android:textSize="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:text=" Activo"
+        android:enabled="false"/>
+
+    <LinearLayout
+        android:layout_width="370dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btadicionar"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:textSize="23dp"
+            android:onClick="Adicionar"
+            android:layout_weight="1"
+            android:text="Adicionar"
+            android:enabled="false"/>
+
+        <Button
+            android:id="@+id/btmodificar"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:textSize="23dp"
+            android:layout_marginLeft="7dp"
+            android:layout_weight="1"
+            android:text="Modificar"
+            android:enabled="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="370dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btanular"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:textSize="23dp"
+            android:layout_weight="1"
+            android:text="Anular"
+            android:enabled="false"/>
+
+        <Button
+            android:id="@+id/bteliminar"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:textSize="23dp"
+            android:layout_marginLeft="7dp"
+            android:layout_weight="1"
+            android:text="Eliminar"
+            android:enabled="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="370dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btlimpiar"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:textSize="23dp"
+            android:layout_weight="1"
+            android:text="Limpiar" />
+
+        <Button
+            android:id="@+id/btregresar"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:textSize="23dp"
+            android:layout_marginLeft="7dp"
+            android:layout_weight="1"
+            android:text="Regresar"
+            android:onClick="Limpiar"/>
+    </LinearLayout>
+</LinearLayout>
