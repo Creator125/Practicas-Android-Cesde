@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Materia">
 
     <TextView
         android:id="@+id/tvtitulo"
@@ -14,7 +14,7 @@
         android:textSize="30dp"
         android:gravity="center"
         android:layout_marginTop="70dp"
-        android:text="Estudiantes" />
+        android:text="Materias" />
 
     <LinearLayout
         android:layout_width="370dp"
@@ -24,13 +24,13 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/etcarnet"
+            android:id="@+id/etcodigomateria"
             android:layout_width="174dp"
             android:layout_height="60dp"
             android:layout_weight="1"
             android:ems="10"
             android:gravity="center"
-            android:hint="Nro carnet"
+            android:hint="Cod materia"
             android:inputType="number"
             android:textSize="28dp" />
 
@@ -46,7 +46,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/etnombre"
+        android:id="@+id/etnombreMateria"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:textSize="30dp"
@@ -54,23 +54,11 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Nombre estudiante"
+        android:hint="Nombre materia"
         android:enabled="false"/>
 
     <EditText
-        android:id="@+id/etcarrera"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:textSize="30dp"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Carrera que estudia"
-        android:enabled="false"/>
-
-    <EditText
-        android:id="@+id/etsemestre"
+        android:id="@+id/etcredito"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:textSize="30dp"
@@ -78,7 +66,19 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="number"
-        android:hint="Semestre"
+        android:hint="Credito"
+        android:enabled="false"/>
+
+    <EditText
+        android:id="@+id/etprofesor"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Nombre profesor"
         android:enabled="false"/>
 
     <CheckBox
@@ -99,26 +99,25 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btadicionar"
+            android:id="@+id/btguardar"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:textSize="23dp"
-            android:onClick="Adicionar"
+            android:onClick="Guardar"
             android:layout_weight="1"
-            android:text="Adicionar"
+            android:text="Guardar"
             android:enabled="false"
             />
 
         <Button
-            android:id="@+id/btmodificar"
+            android:id="@+id/btcancelar"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:textSize="23dp"
             android:layout_marginLeft="7dp"
             android:layout_weight="1"
-            android:text="Modificar"
-            android:enabled="false"
-            android:onClick="Modificar"
+            android:text="Cancelar"
+            android:onClick="Cancelar"
             />
     </LinearLayout>
 
@@ -130,42 +129,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btanular"
+            android:id="@+id/btactivar"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:textSize="23dp"
             android:layout_weight="1"
-            android:text="Anular"
+            android:text="Activar"
             android:enabled="false"
-            android:onClick="Anular"/>
-
-        <Button
-            android:id="@+id/bteliminar"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:textSize="23dp"
-            android:layout_marginLeft="7dp"
-            android:layout_weight="1"
-            android:text="Eliminar"
-            android:enabled="false"
-            android:onClick="Eliminar"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="370dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btlimpiar"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:textSize="23dp"
-            android:layout_weight="1"
-            android:text="Limpiar"
-            android:onClick="Limpiar"/>
+            android:onClick="Activar"/>
 
         <Button
             android:id="@+id/btregresar"

@@ -3,6 +3,7 @@ package com.cesde.universidadapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     EditText etcarnet,etnombre,etcarrera,etsemestre;
     CheckBox cbactivo;
     Button btadicionar,btmodificar,btanular,bteliminar;
-    String carnet,nombre,carrera,semestre,coleccion = "Estudiante";
+    String carnet,nombre,carrera,semestre,coleccion = "Estudiante", clave;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -87,6 +88,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }//fin metodo adicionar
 
+    public void Regresar(View view){
+        Intent intIngreso = new Intent(this, Ingreso.class);
+        startActivity(intIngreso);
+    }
+
     public void Consultar(View view){
         ConsultarDocumento();
     }//Fin metodo consultar
@@ -94,6 +100,85 @@ public class MainActivity extends AppCompatActivity {
     public void Limpiar(View view){
         LimpiarCampos();
     }
+
+    public void Modificar(View view){
+        //Validar que todos los campos están vacios
+        nombre = etnombre.getText().toString();
+        carrera = etcarrera.getText().toString();
+        semestre = etnombre.getText().toString();
+
+        if (!nombre.isEmpty() && !carrera.isEmpty() && !semestre.isEmpty()){
+            //Llenar el contenedor
+            Map<String, Object> Alumno = new HashMap<>();
+            Alumno.put("Carnet", carnet);
+            Alumno.put("Nombre", nombre);
+            Alumno.put("Carrera", carrera);
+            Alumno.put("Semestre", semestre);
+
+            if (cbactivo.isChecked()){
+                Alumno.put("Activo", "Si");
+            }else{
+                Alumno.put("Activo", "No");
+
+                //Modificar la coleccion
+                db.collection(coleccion).document(clave)
+                        .set(Alumno)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(MainActivity.this,"Documento actualizado ...",Toast.LENGTH_SHORT).show();
+                                LimpiarCampos();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(MainActivity.this,"Error actualizando documento...",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        }else {
+            Toast.makeText(this, "Todos los datos son requeridos", Toast.LENGTH_SHORT).show();
+        }
+    }//Fin metodo Modificar
+
+    public void Eliminar(View view){
+        db.collection(coleccion).document(clave)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MainActivity.this,"Documento eliminando ...",Toast.LENGTH_SHORT).show();
+                        LimpiarCampos();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this,"Error eliminando documento...",Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }//Fin metodo Eliminar
+
+    public void Anular(View view){
+        Map<String, Object> Alumno = new HashMap<>();
+        Alumno.put("Activo", "NO");
+        db.collection(coleccion).document(clave)
+                .set(Alumno)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MainActivity.this,"Documento anulado ...",Toast.LENGTH_SHORT).show();
+                        LimpiarCampos();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this,"Error anulando documento...",Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }//Fin metodo anular
 
     private void ConsultarDocumento(){
         carnet = etcarnet.getText().toString();
@@ -106,29 +191,39 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    etnombre.setText(document.getString("Nombre"));
-                                    etcarrera.setText(document.getString("Carrera"));
-                                    etsemestre.setText(document.getString("Semestre"));
+                                if (task.getResult().size() != 0){
+                                    //Encontró al menos un documento
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        clave = document.getId();
+                                        etnombre.setText(document.getString("Nombre"));
+                                        etcarrera.setText(document.getString("Carrera"));
+                                        etsemestre.setText(document.getString("Semestre"));
 
-                                    if(document.getString("Activo").equals("Si")){
-                                        cbactivo.setChecked(true);
-                                    }else{
-                                        cbactivo.setChecked(false);
+                                        if(document.getString("Activo").equals("Si")){
+                                            cbactivo.setChecked(true);
+                                        }else{
+                                            cbactivo.setChecked(false);
+                                        }
+
+                                        btmodificar.setEnabled(true);
+                                        btanular.setEnabled(true);
+                                        bteliminar.setEnabled(true);
+                                        cbactivo.setEnabled(true);
                                     }
-                                    btmodificar.setEnabled(true);
-                                    btanular.setEnabled(true);
-                                    btanular.setEnabled(true);
+                                }else{
+                                    //No encotro docuentos
+                                    Toast.makeText(MainActivity.this, "Registro no hallado", Toast.LENGTH_SHORT).show();
+                                    btadicionar.setEnabled(true);
                                 }
+
+                                etcarnet.setEnabled(false);
+                                etnombre.setEnabled(true);
+                                etcarrera.setEnabled(true);
+                                etsemestre.setEnabled(true);
+                                etnombre.requestFocus();
                             }else{
                                 //Log.w(TAG, "Error getting documents.", task.getException());
                             }
-                            etcarnet.setEnabled(false);
-                            etnombre.setEnabled(true);
-                            etcarrera.setEnabled(true);
-                            etsemestre.setEnabled(true);
-                            cbactivo.setEnabled(true);
-                            etnombre.requestFocus();
                         }
                     });
         }else{
@@ -144,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
         etcarrera.setText("");
         cbactivo.setChecked(false);
         cbactivo.setEnabled(false);
-        etcarnet.setEnabled(false);
+        etcarnet.setEnabled(true);
         etnombre.setEnabled(false);
         etcarrera.setEnabled(false);
         etsemestre.setEnabled(false);
