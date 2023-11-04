@@ -18,7 +18,7 @@ public class FacturasActivity extends AppCompatActivity {
     TextView tvnombre,tvtelefono,tvmarca,tvvalor;
     CheckBox cbactivo;
     Button btadicionar,btanular;
-    String codigo, idenCliente, placa, fecha, codigoFactura, vehiculoActivo;
+    String codigo, idenCliente, placa, fecha, codigoFactura, vehiculoActivo, valorRenta;
     ClsOpenHelper admin = new ClsOpenHelper(this,"Concesionario.db",null,1);
     long respuesta1, respuesta2, respuesta;
     boolean sw;
@@ -141,6 +141,7 @@ public class FacturasActivity extends AppCompatActivity {
         fecha = etfecha.getText().toString();
         idenCliente = etidentificacion.getText().toString();
         placa = etplaca.getText().toString();
+        valorRenta = tvvalor.getText().toString();
 
         //Consultar la tabla de vehiculos
 
@@ -172,9 +173,10 @@ public class FacturasActivity extends AppCompatActivity {
 
                 filaDetalleFactura.put("CodFactura", codigoFactura);
                 filaDetalleFactura.put("Placa", placa);
+                filaDetalleFactura.put("ValorRenta", valorRenta);
 
-                    respuesta1=db.insert("TblFacturas",null,filaFactura);
-                    respuesta2=db.insert("TblDetalle_Factura",null,filaDetalleFactura);
+                respuesta1=db.insert("TblFacturas",null,filaFactura);
+                respuesta2=db.insert("TblDetalle_Factura",null,filaDetalleFactura);
 
                 if (respuesta1 > 0 && respuesta2 > 0){
                     Toast.makeText(this, "Registro guardado", Toast.LENGTH_SHORT).show();
