@@ -180,6 +180,11 @@ public class MainActivity extends AppCompatActivity {
                 });
     }//Fin metodo anular
 
+    public void Listar(View view){
+        Intent intlistar = new Intent(this, ListarEstudiantesActivity.class);
+        startActivity(intlistar);
+    }
+
     private void ConsultarDocumento(){
         carnet = etcarnet.getText().toString();
 
