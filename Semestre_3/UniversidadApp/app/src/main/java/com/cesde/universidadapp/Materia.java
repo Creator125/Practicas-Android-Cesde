@@ -151,6 +151,7 @@ public class Materia extends AppCompatActivity {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         clave = document.getId();
                                         etcodigoMateria.setText(document.getString("Codigo"));
+                                        etnombreMateria.setText(document.getString("Materia"));
                                         etcredito.setText(document.getString("Credito"));
                                         etprofesor.setText(document.getString("Profesor"));
 
@@ -162,7 +163,7 @@ public class Materia extends AppCompatActivity {
 
                                         btguardar.setEnabled(true);
                                         btactivar.setEnabled(true);
-                                        cbactivo.setEnabled(true);
+                                        cbactivo.setEnabled(false);
                                     }
                                 }else{
                                     //No encotro docuentos

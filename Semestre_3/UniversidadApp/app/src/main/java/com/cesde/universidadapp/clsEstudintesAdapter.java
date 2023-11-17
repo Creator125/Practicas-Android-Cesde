@@ -1,5 +1,6 @@
 package com.cesde.universidadapp;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -20,7 +21,8 @@ public class clsEstudintesAdapter extends RecyclerView.Adapter <clsEstudintesAda
     @NonNull
     @Override
     public clsEstudintesAdapter.clsestudiantesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.estudiantesresource, null, false);
+        return new clsEstudintesAdapter.clsestudiantesViewHolder(view);
     }
 
     @Override

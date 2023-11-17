@@ -213,12 +213,12 @@ public class MainActivity extends AppCompatActivity {
                                         btmodificar.setEnabled(true);
                                         btanular.setEnabled(true);
                                         bteliminar.setEnabled(true);
-                                        cbactivo.setEnabled(true);
+                                        cbactivo.setEnabled(false);
                                     }
                                 }else{
                                     //No encotro docuentos
                                     Toast.makeText(MainActivity.this, "Registro no hallado", Toast.LENGTH_SHORT).show();
-                                    btadicionar.setEnabled(true);
+                                    btadicionar.setEnabled(false);
                                 }
 
                                 etcarnet.setEnabled(false);
