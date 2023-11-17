@@ -179,8 +179,12 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btlistar"
         android:layout_width="370dp"
         android:layout_height="55dp"
-
-        />
+        android:layout_marginTop="10dp"
+        android:onClick="Listar"
+        android:layout_gravity="center"
+        android:textSize="23dp"
+        android:text="Consulta general" />
 </LinearLayout>

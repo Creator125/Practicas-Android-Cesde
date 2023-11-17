@@ -2,6 +2,7 @@ package com.cesde.universidadapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -35,6 +36,10 @@ public class ListarEstudiantesActivity extends AppCompatActivity {
         rvestudiantes = findViewById(R.id.rvestudiantes);
         //Inicializar el ArrayList
         listaEstudiantes = new ArrayList<>();
+        //Administrador del recycleview
+        rvestudiantes.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
+        rvestudiantes.setHasFixedSize(true);
+        cargar_datos();
 
         //Mostar los resultados
         cargar_datos();
@@ -54,10 +59,21 @@ public class ListarEstudiantesActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             //Encontró al menos un documento
                             for (QueryDocumentSnapshot document : task.getResult()) {
-
+                                //Llenar el array
+                                clsEstudiantes objestudiantes = new clsEstudiantes();
+                                objestudiantes.setCarnet(document.getString("Carnet"));
+                                objestudiantes.setNombre(document.getString("Nombre"));
+                                objestudiantes.setCarrera(document.getString("Carrera"));
+                                objestudiantes.setSemestre(document.getString("Semestre"));
+                                objestudiantes.setActivo(document.getString("Activo"));
+                                listaEstudiantes.add(objestudiantes);
                             }
+                            clsEstudintesAdapter adestudiantes = new clsEstudintesAdapter(listaEstudiantes);
+                            //Llenar el RecyclerView con los adaptados
+                            rvestudiantes.setAdapter(adestudiantes);
                         }
                     }
                 });
     }//Fin metodo cargar_datos
+
 }

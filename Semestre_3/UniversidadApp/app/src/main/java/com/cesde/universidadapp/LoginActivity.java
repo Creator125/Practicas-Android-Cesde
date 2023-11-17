@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     }//fin metodo onCreate
 
     public void Ingresar(View view){
-        ConsultarDocumento();
+        ingreso();
     }
 
     private void ConsultarDocumento(){
@@ -51,8 +51,6 @@ public class LoginActivity extends AppCompatActivity {
                                 if (task.getResult().size() != 0){
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         clave = document.getId();
-                                        Intent intIngreso = new Intent(LoginActivity.this, Ingreso.class);
-                                        startActivity(intIngreso);
                                     }
                                 }else{
                                     //No encotro docuentos
@@ -68,5 +66,10 @@ public class LoginActivity extends AppCompatActivity {
             etusuario.requestFocus();
         }
     }//Fin metodo ConsultarRegistro()
+
+    private void ingreso(){
+        Intent intIngreso = new Intent(this, Ingreso.class);
+        startActivity(intIngreso);
+    }
 
 }

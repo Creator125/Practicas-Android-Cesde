@@ -15,6 +15,10 @@ public class clsEstudiantes {
         this.activo = activo;
     }
 
+    public clsEstudiantes(){
+
+    }
+
     public String getCarnet() {
         return carnet;
     }
