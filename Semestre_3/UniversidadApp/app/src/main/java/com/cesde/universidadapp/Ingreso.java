@@ -23,4 +23,9 @@ public class Ingreso extends AppCompatActivity {
         Intent intMateria = new Intent(this, Materia.class);
         startActivity(intMateria);
     }
+
+    public void Matricula(View view){ //Metodo para ir a la actividad de  Matricula
+        Intent intMatricula = new Intent(this, MatriculaActivity.class);
+        startActivity(intMatricula);
+    }
 }
