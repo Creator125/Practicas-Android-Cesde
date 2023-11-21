@@ -42,7 +42,8 @@
             android:layout_weight="1"
             android:onClick="Consultar"
             android:text="Buscar"
-            android:textSize="23dp" />
+            android:textSize="23dp"
+            />
     </LinearLayout>
 
     <EditText
@@ -91,7 +92,7 @@
                 android:layout_marginLeft="7dp"
                 android:layout_weight="1"
                 android:text="Buscar"
-                android:onClick="Consultar"/>
+                android:onClick="ConsultarCarnet"/>
         </LinearLayout>
 
         <LinearLayout
