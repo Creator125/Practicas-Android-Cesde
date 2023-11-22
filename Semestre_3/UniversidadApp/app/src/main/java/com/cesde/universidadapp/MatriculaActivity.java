@@ -37,12 +37,12 @@ public class MatriculaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_matricula);
 
         //Asociar los objetos Java con los objetos Xml
-        etmatricula = findViewById(R.id.etcarnet);
+        etmatricula = findViewById(R.id.etmatricula);
         etfechasistema = findViewById(R.id.etfechasistema);
         etcarnet = findViewById(R.id.etcarnet);
         etmateria = findViewById(R.id.etmateria);
         tvnombre = findViewById(R.id.tvnombre);
-        tvcarrera = findViewById(R.id.tvmateria);
+        tvcarrera = findViewById(R.id.tvcarrera);
         tvmateria = findViewById(R.id.tvmateria);
         tvcredito = findViewById(R.id.tvcredito);
         cbactivo = findViewById(R.id.cbactivo);
@@ -58,6 +58,72 @@ public class MatriculaActivity extends AppCompatActivity {
     public void Consultar(View view){
         ConsultarDocumento();
     }//Fin metodo consultar
+
+    public void ConsultarCarnet(View view){
+        carnet = etcarnet.getText().toString();
+
+        if (!carnet.isEmpty()){
+            db.collection("Estudiante")
+                    .whereEqualTo("Carnet", carnet)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (task.getResult().size() != 0){
+                                    //Encontró al menos un documento
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        clave = document.getId();
+                                        tvnombre.setText(document.getString("Nombre"));
+                                        tvcarrera.setText(document.getString("Carrera"));
+                                    }
+                                }else{
+                                    //No encotro docuentos
+                                    Toast.makeText(MatriculaActivity.this, "Registro no hallado", Toast.LENGTH_SHORT).show();
+                                }
+                            }else{
+                                //Log.w(TAG, "Error getting documents.", task.getException());
+                            }
+                        }
+                    });
+        }else{
+            Toast.makeText(this, "El carnet es requerido", Toast.LENGTH_SHORT).show();
+            etcarnet.requestFocus();
+        }
+    }
+
+    public void ConsultarMateria(View view){
+        codigoMateria = etmateria.getText().toString();
+
+        if (!codigoMateria.isEmpty()){
+            db.collection("Materia")
+                    .whereEqualTo("Codigo", codigoMateria)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (task.getResult().size() != 0){
+                                    //Encontró al menos un documento
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        clave = document.getId();
+                                        tvmateria.setText(document.getString("Materia"));
+                                        tvcredito.setText(document.getString("Credito"));
+                                    }
+                                }else{
+                                    //No encotro docuentos
+                                    Toast.makeText(MatriculaActivity.this, "Registro no hallado", Toast.LENGTH_SHORT).show();
+                                }
+                            }else{
+                                //Log.w(TAG, "Error getting documents.", task.getException());
+                            }
+                        }
+                    });
+        }else{
+            Toast.makeText(this, "El codigo de la materia es requerido", Toast.LENGTH_SHORT).show();
+            etcarnet.requestFocus();
+        }
+    }
 
     public void Adicionar(View view){
         //Validar que toda la informacion fue digita
@@ -93,40 +159,6 @@ public class MatriculaActivity extends AppCompatActivity {
         }
     }//fin metodo adicionar
 
-    public void ConsultarCarnet(View view){
-        carnet = etcarnet.getText().toString();
-
-        if (!carnet.isEmpty()){
-            db.collection(coleccion)
-                    .whereEqualTo("Carnet", carnet)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                if (task.getResult().size() != 0){
-                                    //Encontró al menos un documento
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        clave = document.getId();
-                                        tvnombre.setText(document.getString("Nombre"));
-                                        tvcarrera.setText(document.getString("Carrera"));
-                                    }
-                                }else{
-                                    //No encotro docuentos
-                                    Toast.makeText(MatriculaActivity.this, "Registro no hallado", Toast.LENGTH_SHORT).show();
-                                    btadicionar.setEnabled(false);
-                                }
-                            }else{
-                                //Log.w(TAG, "Error getting documents.", task.getException());
-                            }
-                        }
-                    });
-        }else{
-            Toast.makeText(this, "El carnet es requerido", Toast.LENGTH_SHORT).show();
-            etcarnet.requestFocus();
-        }
-    }
-
     private void ConsultarDocumento(){
         matricula = etmatricula.getText().toString();
 
@@ -156,6 +188,7 @@ public class MatriculaActivity extends AppCompatActivity {
                                             cbactivo.setChecked(false);
                                         }
 
+                                        btadicionar.setEnabled(true);
                                         btanular.setEnabled(true);
                                         cbactivo.setEnabled(false);
                                     }
@@ -176,7 +209,7 @@ public class MatriculaActivity extends AppCompatActivity {
                         }
                     });
         }else{
-            Toast.makeText(this, "El codigo de la matricula es req", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "El codigo de la matricula es requerido", Toast.LENGTH_SHORT).show();
             etcarnet.requestFocus();
         }
     }//Fin metodo ConsultarRegistro()
