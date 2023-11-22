@@ -133,14 +133,20 @@ public class MatriculaActivity extends AppCompatActivity {
 
         if (!carnet.isEmpty() && !nombre.isEmpty() && !carrera.isEmpty()){
             //Llenar el contenedor
-            Map<String, Object> Alumno = new HashMap<>();
-            Alumno.put("Carnet", carnet);
-            Alumno.put("Nombre", nombre);
-            Alumno.put("Carrera", carrera);
+            Map<String, Object> Matricula = new HashMap<>();
+            Matricula.put("Codigo_matricula", matricula);
+            Matricula.put("Fecha", fechaMatricula);
+            Matricula.put("Carnet", carnet);
+            Matricula.put("Nombre", nombre);
+            Matricula.put("Carrera", carrera);
+            Matricula.put("Codigo_materia", codigoMateria);
+            Matricula.put("Materia", materia);
+            Matricula.put("Credito", credito);
+            Matricula.put("Activo", "Si");
 
             // Add a new document with a generated ID
             db.collection(coleccion)
-                    .add(Alumno)
+                    .add(Matricula)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
@@ -174,6 +180,7 @@ public class MatriculaActivity extends AppCompatActivity {
                                     //Encontró al menos un documento
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         clave = document.getId();
+                                        etmatricula.setText(document.getString("Codigo_matricula"));
                                         etfechasistema.setText(document.getString("Fecha"));
                                         etcarnet.setText(document.getString("Carnet"));
                                         tvnombre.setText(document.getString("Nombre"));
@@ -195,7 +202,7 @@ public class MatriculaActivity extends AppCompatActivity {
                                 }else{
                                     //No encotro docuentos
                                     Toast.makeText(MatriculaActivity.this, "Registro no hallado", Toast.LENGTH_SHORT).show();
-                                    btadicionar.setEnabled(false);
+                                    btadicionar.setEnabled(true);
                                 }
 
                                 etmatricula.setEnabled(false);

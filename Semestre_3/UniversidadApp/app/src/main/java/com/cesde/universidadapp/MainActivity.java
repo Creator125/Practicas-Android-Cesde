@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                                 }else{
                                     //No encotro docuentos
                                     Toast.makeText(MainActivity.this, "Registro no hallado", Toast.LENGTH_SHORT).show();
-                                    btadicionar.setEnabled(false);
+                                    btadicionar.setEnabled(true);
                                 }
 
                                 etcarnet.setEnabled(false);
