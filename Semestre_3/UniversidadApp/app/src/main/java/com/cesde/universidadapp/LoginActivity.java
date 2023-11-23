@@ -19,7 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class LoginActivity extends AppCompatActivity {
     EditText etusuario, etcontrasena;
     Button btingreso;
-    String usuario,contrasena, coleccion = "Estudiante", clave;
+    String usuario,contrasena, coleccion = "Administrador", clave;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +33,13 @@ public class LoginActivity extends AppCompatActivity {
         etusuario.requestFocus();
     }//fin metodo onCreate
 
-    public void Ingresar(View view){
-        ingreso();
-    }
+    //public void Ingresar(View view){ ingreso();}
 
     private void ConsultarDocumento(){
         usuario = etusuario.getText().toString();
+        contrasena = etcontrasena.getText().toString();
 
-        if (!usuario.isEmpty()){
+        if (!usuario.isEmpty() && contrasena.isEmpty()){
             db.collection(coleccion)
                     .whereEqualTo("usuario", usuario)
                     .get()
@@ -51,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (task.getResult().size() != 0){
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         clave = document.getId();
+                                        ingreso();
                                     }
                                 }else{
                                     //No encotro docuentos

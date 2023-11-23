@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> Alumno = new HashMap<>();
         Alumno.put("Activo", "NO");
         db.collection(coleccion).document(clave)
-                .set(Alumno)
+                .update(Alumno)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

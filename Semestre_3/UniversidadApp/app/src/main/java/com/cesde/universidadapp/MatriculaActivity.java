@@ -3,6 +3,7 @@ package com.cesde.universidadapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -127,21 +128,18 @@ public class MatriculaActivity extends AppCompatActivity {
 
     public void Adicionar(View view){
         //Validar que toda la informacion fue digita
-        carnet=etcarnet.getText().toString();
-        nombre= tvnombre.getText().toString();
-        carrera=tvcarrera.getText().toString();
+        matricula = etmatricula.getText().toString();
+        fechaMatricula = etfechasistema.getText().toString();
+        carnet = etcarnet.getText().toString();
+        codigoMateria = etmateria.getText().toString();
 
-        if (!carnet.isEmpty() && !nombre.isEmpty() && !carrera.isEmpty()){
+        if (!matricula.isEmpty() && !fechaMatricula.isEmpty() && !carnet.isEmpty() && !codigoMateria.isEmpty()){
             //Llenar el contenedor
             Map<String, Object> Matricula = new HashMap<>();
             Matricula.put("Codigo_matricula", matricula);
             Matricula.put("Fecha", fechaMatricula);
             Matricula.put("Carnet", carnet);
-            Matricula.put("Nombre", nombre);
-            Matricula.put("Carrera", carrera);
             Matricula.put("Codigo_materia", codigoMateria);
-            Matricula.put("Materia", materia);
-            Matricula.put("Credito", credito);
             Matricula.put("Activo", "Si");
 
             // Add a new document with a generated ID
@@ -165,6 +163,36 @@ public class MatriculaActivity extends AppCompatActivity {
         }
     }//fin metodo adicionar
 
+    public void Anular(View view){
+        Map<String, Object> Matricula = new HashMap<>();
+        Matricula.put("Activo", "NO");
+        db.collection(coleccion).document(clave)
+                .update(Matricula)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MatriculaActivity.this,"Documento anulado ...",Toast.LENGTH_SHORT).show();
+                        LimpiarCampos();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MatriculaActivity.this,"Error anulando documento...",Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }//Fin metodo anular
+
+    public void Limpiar(View view){
+        LimpiarCampos();
+    }
+    //Fin metodo limpiar
+
+    public void Regresar(View view){
+        Intent intIngreso = new Intent(this, Ingreso.class);
+        startActivity(intIngreso);
+    }//Fin metodo Regresar
+
     private void ConsultarDocumento(){
         matricula = etmatricula.getText().toString();
 
@@ -183,11 +211,7 @@ public class MatriculaActivity extends AppCompatActivity {
                                         etmatricula.setText(document.getString("Codigo_matricula"));
                                         etfechasistema.setText(document.getString("Fecha"));
                                         etcarnet.setText(document.getString("Carnet"));
-                                        tvnombre.setText(document.getString("Nombre"));
-                                        tvcarrera.setText(document.getString("Carrera"));
                                         etmateria.setText(document.getString("Codigo_materia"));
-                                        tvmateria.setText(document.getString("Materia"));
-                                        tvcredito.setText(document.getString("Credito"));
 
                                         if(document.getString("Activo").equals("Si")){
                                             cbactivo.setChecked(true);
@@ -220,4 +244,24 @@ public class MatriculaActivity extends AppCompatActivity {
             etcarnet.requestFocus();
         }
     }//Fin metodo ConsultarRegistro()
+
+    private void LimpiarCampos(){
+        etmatricula.setText("");
+        etfechasistema.setText("");
+        etcarnet.setText("");
+        tvnombre.setText("");
+        tvcarrera.setText("");
+        etmateria.setText("");
+        tvmateria.setText("");
+        tvcredito.setText("");
+        etfechasistema.setEnabled(false);
+        etcarnet.setEnabled(false);
+        etmateria.setEnabled(false);
+        cbactivo.setChecked(false);
+        cbactivo.setEnabled(false);
+        etcarnet.setEnabled(true);
+        btadicionar.setEnabled(false);
+        btanular.setEnabled(false);
+        etmatricula.requestFocus();
+    }
 }
