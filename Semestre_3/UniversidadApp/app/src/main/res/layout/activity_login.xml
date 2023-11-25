@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:inputType="textPassword"
-        android:hint="Usuario"
+        android:hint="Contraseña"
         />
 
     <Button

@@ -33,15 +33,16 @@ public class LoginActivity extends AppCompatActivity {
         etusuario.requestFocus();
     }//fin metodo onCreate
 
-    //public void Ingresar(View view){ ingreso();}
+    public void Ingresar(View view){ ConsultarDocumento();}
 
     private void ConsultarDocumento(){
         usuario = etusuario.getText().toString();
         contrasena = etcontrasena.getText().toString();
 
-        if (!usuario.isEmpty() && contrasena.isEmpty()){
+        if (!usuario.isEmpty() && !contrasena.isEmpty()){
             db.collection(coleccion)
                     .whereEqualTo("usuario", usuario)
+                    .whereEqualTo("contrasena", contrasena) // Verifica la contraseña
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -53,19 +54,20 @@ public class LoginActivity extends AppCompatActivity {
                                         ingreso();
                                     }
                                 }else{
-                                    //No encotro docuentos
-                                    Toast.makeText(LoginActivity.this, "Registro no hallado", Toast.LENGTH_SHORT).show();
+                                    // No encontró documentos con ese usuario y contraseña
+                                    Toast.makeText(LoginActivity.this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                                 }
                             }else{
-                                //Log.w(TAG, "Error getting documents.", task.getException());
+                                // Error al obtener documentos
+                                // Log.w(TAG, "Error getting documents.", task.getException());
                             }
                         }
                     });
         }else{
-            Toast.makeText(this, "El usuario es requerido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "El usuario y la contraseña son requeridos", Toast.LENGTH_SHORT).show();
             etusuario.requestFocus();
         }
-    }//Fin metodo ConsultarRegistro()
+    }//Fin metodo ConsultarDocumento()
 
     private void ingreso(){
         Intent intIngreso = new Intent(this, Ingreso.class);
