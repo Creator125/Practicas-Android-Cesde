@@ -33,8 +33,6 @@ public class Materia extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_materia);
-        //Ocultar barra de titulo por defecto
-        getSupportActionBar().hide();
         //Asociar los objetos Java con los objetos Xml
         etcodigoMateria = findViewById(R.id.etcodigomateria);
         etnombreMateria = findViewById(R.id.etnombreMateria);

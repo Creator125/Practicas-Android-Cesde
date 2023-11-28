@@ -29,7 +29,6 @@ public class ListarEstudiantesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_estudiantes);
-        getSupportActionBar().hide();
 
         //Asociar objetos Java con los objetos XML
         tvaplicacion = findViewById(R.id.tvaplicacion);

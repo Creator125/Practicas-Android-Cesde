@@ -11,12 +11,12 @@
         android:id="@+id/btestudiantes"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:onClick="Estudiante"
-        android:layout_marginTop="200dp"
         android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:onClick="Estudiante"
+        android:text="Estudiantes"
         android:textAllCaps="false"
-        android:text="Estudiantes" />
+        android:textSize="25dp" />
 
     <Button
         android:id="@+id/btmaterias"

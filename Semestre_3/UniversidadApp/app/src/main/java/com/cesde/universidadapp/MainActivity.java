@@ -35,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Ocultar barra de titulo por defecto
-        getSupportActionBar().hide();
+
         //Asociar los objetos Java con los objetos Xml
         etcarnet=findViewById(R.id.etcarnet);
         etnombre=findViewById(R.id.etnombre);
