@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             Toast.makeText(MainActivity.this, "Registro guardado", Toast.LENGTH_SHORT).show();
+                            cbactivo.setChecked(true);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

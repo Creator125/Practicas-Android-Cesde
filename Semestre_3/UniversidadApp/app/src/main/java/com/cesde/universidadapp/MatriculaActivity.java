@@ -149,6 +149,7 @@ public class MatriculaActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             Toast.makeText(MatriculaActivity.this, "Registro guardado", Toast.LENGTH_SHORT).show();
+                            cbactivo.setChecked(true);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -254,6 +255,7 @@ public class MatriculaActivity extends AppCompatActivity {
         etmateria.setText("");
         tvmateria.setText("");
         tvcredito.setText("");
+        etmatricula.setEnabled(true);
         etfechasistema.setEnabled(false);
         etcarnet.setEnabled(false);
         etmateria.setEnabled(false);
